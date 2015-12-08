@@ -32,10 +32,6 @@ namespace SCS.SsisDashboard.UI
                         "~/Scripts/app.js"
                         ));
 
-            bundles.Add(new StyleBundle("~/content/fonts").Include(
-                      "~/Content/fonts/font-awesome-4.1.0/css/font-awesome.min.css"
-                      ));
-
             bundles.Add(new StyleBundle("~/content/css").Include(
                       "~/content/bootstrap/bootstrap.css",
                       "~/content/bootstrap/bootstrap-theme.css",
