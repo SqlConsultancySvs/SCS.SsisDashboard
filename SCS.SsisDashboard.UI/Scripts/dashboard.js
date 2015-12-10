@@ -136,6 +136,14 @@ $(document).ready(function () {
             }
             if (html) {
                 row.child(html).show();
+                if (type == "warning") {
+                    $("#messageHeader").addClass("bg-warning");
+                    $("#messageHeader").removeClass("bg-danger");
+                }
+                if (type == "error") {
+                    $("#messageHeader").addClass("bg-danger");
+                    $("#messageHeader").removeClass("bg-warning");
+                }
                 detailTable.columns.adjust().draw();
             }
             else {

@@ -8,15 +8,10 @@ namespace SCS.SissDashboard.DAL
     {
         protected EfContext context = new EfContext();
 
-        protected virtual IQueryable<Execution> Query()
-        {
-            return context.Set<Execution>();
-        }
-
         public virtual List<Executable> Fetch(int executionId)
         {
             var sql = @"
-                    SELECT e.executable_id	ExecutableId
+                    SELECT e.executable_id	Id
 	                    ,e.executable_name	Name
 	                    ,e.package_name		PackageName
 	                    ,e.package_path		PackagePath

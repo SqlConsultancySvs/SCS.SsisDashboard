@@ -4,7 +4,7 @@ namespace SCS.SsisDashboard.Models
 {
     public class Execution
     {
-        public long ExecutionId { get; set; }
+        public long Id { get; set; }
         public string ProjectName { get; set; }
         public string PackageName { get; set; }
         public long ProjectLsn { get; set; }

@@ -4,7 +4,7 @@ namespace SCS.SsisDashboard.Models
 {
     public class Executable
     {
-        public long ExecutableId { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string PackageName { get; set; }
         public string PackagePath { get; set; }

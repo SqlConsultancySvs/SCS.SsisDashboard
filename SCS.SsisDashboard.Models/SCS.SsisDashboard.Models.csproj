@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\MessageType.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Executable.cs" />
     <Compile Include="Models\KPI.cs" />
     <Compile Include="Models\Execution.cs" />

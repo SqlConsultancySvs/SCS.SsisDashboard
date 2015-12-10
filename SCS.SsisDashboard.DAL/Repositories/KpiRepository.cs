@@ -20,11 +20,6 @@ namespace SCS.SissDashboard.DAL
 
         protected EfContext context = new EfContext();
 
-        protected virtual IQueryable<KPI> Query()
-        {
-            return context.Set<KPI>();
-        }
-
         public virtual List<KPI> Fetch()
         {
             var sql = @"
