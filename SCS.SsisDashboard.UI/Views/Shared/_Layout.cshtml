@@ -16,12 +16,13 @@
 <body>
     <div>
         <div class="row">
-            <div class="col-md-4">
-                <img src='@Url.Content("~/Content/Images/logo.png")' title="Company Logo" alt="Company Logo" />
-            </div>
-            <div class="col-md-8 app-title">
+            <div class="col-md-9 col-md-offset-1 app-title">
                 <h1>SSIS Dashboard Version:@typeof(SCS.SsisDashboard.UI.WebApiConfig).Assembly.GetName().Version</h1>
             </div>
+            <div class="col-md-1">
+                <img src='@Url.Content("~/Content/Images/SCS.jpg")' style="max-width: 100pt" title="Company Logo" alt="Company Logo" />
+            </div>
+
         </div>
         <div class="row">
             <div class="col-md-12">
