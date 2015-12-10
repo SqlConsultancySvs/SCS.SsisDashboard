@@ -3,6 +3,8 @@ using SCS.SissDashboard.DAL;
 using System;
 using System.Web;
 using System.Web.Mvc;
+using System.Collections.Generic;
+using SCS.SsisDashboard.Models;
 
 namespace SCS.SsisDashboard.UI.Controllers
 {
@@ -68,6 +70,41 @@ namespace SCS.SsisDashboard.UI.Controllers
             }
         }
 
+        [HttpGet]
+        public JsonResult GetMessages(int executionId, string type)
+        {
+            MessageType messageType = MessageType.Unknown;
+            switch(type)
+            {
+                case "error":
+                    messageType = MessageType.Error;
+                    break;
+                case "warning":
+                    messageType = MessageType.Warning;
+                    break;
+            }
+
+            try
+            {
+                if (messageType == MessageType.Unknown)
+                {
+                    throw new ArgumentException(String.Format("Unknoe messgae tpye of {0}", type));
+                }
+                var data = new MessageRepository().Fetch(executionId, messageType);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                this.LogError(String.Format("{0} List controller method failed with an error of {0}:{1}", "GetMessges", e));
+                return Json(new { exception = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        private List<Message> GetMessages(int executionId, MessageType messageType)
+        {
+            return new MessageRepository().Fetch(executionId, messageType);
+        }
+    
         #region Logging Methods
 
         #region Debugging Log

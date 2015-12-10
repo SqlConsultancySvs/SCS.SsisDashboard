@@ -1,6 +1,11 @@
 ﻿var executionsTable;
 var executablesTable;
 var executablesWrapper;
+var messagesTable;
+var messagesWrapper;
+
+var detailsTable;
+var detailType;
 var interval;
 
 function UpdateTables() {
@@ -55,6 +60,7 @@ $(document).ready(function () {
     // Executions section
     // keep ref here so its not lost
     executablesWrapper = $("#executablesWrapper");
+    messagesWrapper = $("#messagesWrapper");
 
     executionsTable = $('#executions').DataTable({
         "pageLength": 5,
@@ -63,7 +69,7 @@ $(document).ready(function () {
         "order": [[0, "desc"]],
         rowId: 'ExecutionId',
         "columns": [
-            { "data": "ExecutionId" },
+            { "data": "Id" },
             { "data": "ProjectName" },
             { "data": "PackageName" },
             { "data": "Status" },
@@ -77,10 +83,24 @@ $(document).ready(function () {
         "columnDefs": [
             {
                 "render": function (data, type, row) {
-                    return '<a data-id="' + data + '" class="details-control">' + data + '</a>'
+                    return '<a data-type="detail" data-id="' + data + '" class="drilldown-control">' + data + '</a>'
                     ;
                 },
                 "targets": 0
+            },
+            {
+                "render": function (data, type, row) {
+                    return '<a data-type="warning" data-id="' + row.Id + '" class="drilldown-control">' + data + '</a>'
+                    ;
+                },
+                "targets": 8
+            },
+            {
+                "render": function (data, type, row) {
+                    return '<a data-type="error" data-id="' + row.Id + '" class="drilldown-control">' + data + '</a>'
+                    ;
+                },
+                "targets": 9
             }
         ]
     });
@@ -88,13 +108,16 @@ $(document).ready(function () {
     $('.dataTables_filter input').attr('placeholder', 'Search')
 
     // Add event listener for opening and closing details
-    $('#executions tbody').on('click', 'a.details-control', function () {
+    $('#executions tbody').on('click', 'a.drilldown-control', function () {
+        var id = ($(this).data("id"))
+        var type = ($(this).data("type"))
         var table = $('#executions').DataTable();
         var tr = $(this).closest('tr');
         var row = table.row(tr);
-        if (row.child.isShown()) {
-            // This row is already open - close it
+        // This row is already open and we have clicked same column then close it
+        if (row.child.isShown() && detailType == type) {
             row.child.hide();
+            detailType = null;
         }
         else {
             // Open this row
@@ -105,27 +128,34 @@ $(document).ready(function () {
                     row.child().hide();
                 }
             });
-            var html = GeExecutables(this);
+            if (type == "detail") {
+                var html = GeExecutables(id);
+            }
+            else {
+                var html = GetMessages(id, type);
+            }
             if (html) {
                 row.child(html).show();
+                detailTable.columns.adjust().draw();
             }
             else {
 
                 alert("No datatable HTML!");
             }
+            detailType = type;
         }
     });
 
-    UpdateTables();
 
+    UpdateTables();
 });
 
 function IntialiseExecutablesTable() {
     executablesTable = $('#executables').DataTable({
         "pageLength": 5,
         "lengthMenu": [[2, 5, 10, 25, 50, -1], [2, 5, 10, 25, 50, "All"]],
-        "order": [[0, "desc"]],
-        rowId: 'ExecutableId',
+        "order": [[0, "asc"]],
+        rowId: 'Id',
         "columns": [
             { "data": "Name" },
             { "data": "StartTimeString" },
@@ -135,8 +165,23 @@ function IntialiseExecutablesTable() {
             { "data": "ExecutionValue" }
         ]
     });
+}
 
-    executablesInitialised = true;
+function IntialiseMessagesTable() {
+    messagesTable = $('#messages').DataTable({
+        "pageLength": 5,
+        "lengthMenu": [[2, 5, 10, 25, 50, -1], [2, 5, 10, 25, 50, "All"]],
+        "order": [[0, "asc"]],
+        rowId: 'Id',
+        "columns": [
+            { "data": "Id" },
+            { "data": "MessageText" },
+            { "data": "Time" },
+            { "data": "Event" },
+            { "data": "Source" },
+            { "data": "Component" }
+        ]
+    });
 }
 
 function FilterProjectList(status) {
@@ -158,21 +203,32 @@ function FilterProjectList(status) {
     $(html).insertAfter('#executions_length label');
 }
 
-function GeExecutables(control) {
-    var id = ($(control).data("id"));
+function GeExecutables(id) {
     var data = App.GetApiData("/Home/GetExecutables", { executionId: id });
     if (!executablesTable) {
         IntialiseExecutablesTable();
     }
     executablesTable.clear();
-    executablesTable.rows.add(data).draw();;
+    executablesTable.rows.add(data);
+    detailTable = executablesTable;
     return executablesWrapper;
+}
+
+function GetMessages(id, type) {
+    var data = App.GetApiData("/Home/GetMessages", { executionId: id, type: type });
+    if (!messagesTable) {
+        IntialiseMessagesTable();
+    }
+    messagesTable.clear();
+    messagesTable.rows.add(data);
+    detailTable = messagesTable;
+    return messagesWrapper;
 }
 
 function UpdateProjectList(control) {
     var data = App.GetApiData("/Home/GetExecutions", null);
     executionsTable.clear();
-    executionsTable.rows.add(data).draw();;
+    executionsTable.rows.add(data).draw();
     return executablesWrapper;
 }
 
