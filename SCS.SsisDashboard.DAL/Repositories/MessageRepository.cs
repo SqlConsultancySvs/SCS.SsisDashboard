@@ -1,7 +1,6 @@
 ﻿using SCS.SsisDashboard.Models;
 using System.Collections.Generic;
 using System.Linq;
-using SCS.SsisDashboard.Models;
 
 namespace SCS.SissDashboard.DAL
 {
@@ -16,7 +15,6 @@ namespace SCS.SissDashboard.DAL
 	                    event_message_id                        Id
 	                    ,CAST(message_time AS DATETIME)			Time
 	                    ,message				                MessageText
-	                    ,event_name				                EventName
 	                    ,message_source_name	                Source
 	                    ,ISNULL(subcomponent_name,'')	        Component
                     FROM catalog.event_messages m

@@ -181,7 +181,6 @@ $(document).ready(function () {
         }
     });
 
-
     UpdateTables();
 });
 
@@ -211,8 +210,7 @@ function IntialiseMessagesTable() {
         "columns": [
             { "data": "Id" },
             { "data": "MessageText" },
-            { "data": "Time" },
-            { "data": "Event" },
+            { "data": "TimeString" },
             { "data": "Source" },
             { "data": "Component" }
         ]

@@ -14,7 +14,7 @@ namespace SCS.SsisDashboard.Models
         {
             get
             {
-                return this.StartTime.HasValue ? this.StartTime.Value.ToShortTimeString() : string.Empty;
+                return this.StartTime.HasValue ? this.StartTime.Value.ToShortDateString() : string.Empty;
             }
         }
         public DateTime? StartTime { get; set; }
