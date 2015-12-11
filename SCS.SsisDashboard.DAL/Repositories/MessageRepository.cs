@@ -19,7 +19,7 @@ namespace SCS.SissDashboard.DAL
 	                    ,event_name				                EventName
 	                    ,message_source_name	                Source
 	                    ,ISNULL(subcomponent_name,'')	        Component
-                    FROM SSISDB2.catalog.event_messages m
+                    FROM catalog.event_messages m
                     WHERE operation_id = {0}
 	                    AND m.message_type = {1}
                 ";

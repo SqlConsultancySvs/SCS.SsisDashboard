@@ -10,9 +10,9 @@ var interval;
 
 function UpdateTables() {
     $('.blockUI').block({
-        message: '<h1>loading...</h1>', 
+        message: '<h1>loading...</h1>',
         fadein: 200,
-        fadeout: 400, 
+        fadeout: 400,
         overlayCSS: {
             backgroundColor: '#000',
             opacity: 0.45,
@@ -26,7 +26,7 @@ function UpdateTables() {
     catch (error) {
         App.MsgDialog('type-warning', error);
     }
-    window.setTimeout(function () { $('.blockUI').unblock();}, 100); //without a delay we dont get the block ui mask....no idea why
+    window.setTimeout(function () { $('.blockUI').unblock(); }, 100); //without a delay we dont get the block ui mask....no idea why
 }
 
 $(document).ready(function () {
@@ -77,30 +77,57 @@ $(document).ready(function () {
             { "data": "StartTimeString" },
             { "data": "EndTimeString" },
             { "data": "ElapsedTimeInMinutes" },
+            { "data": "NumberOfExecutables" },
             { "data": "NumberOfWarnings" },
-            { "data": "NumberOfErrors" }
+            { "data": "NumberOfErrors" }       
         ],
         "columnDefs": [
             {
                 "render": function (data, type, row) {
-                    return '<a data-type="detail" data-id="' + data + '" class="drilldown-control">' + data + '</a>'
-                    ;
+                    return '<a>' + data + '</a>';
                 },
-                "targets": 0
-            },
-            {
-                "render": function (data, type, row) {
-                    return '<a data-type="warning" data-id="' + row.Id + '" class="drilldown-control">' + data + '</a>'
-                    ;
+                "fnCreatedCell": function (td, data, rowData, iRow, iCol) {
+                    $(td).addClass('drilldown-control');
+                    $(td).data("id", rowData.Id);
+                    $(td).data("type", "detail");
                 },
                 "targets": 8
             },
             {
                 "render": function (data, type, row) {
-                    return '<a data-type="error" data-id="' + row.Id + '" class="drilldown-control">' + data + '</a>'
-                    ;
+                    if (data != 0) {
+                        return '<a>' + data + '</a>';
+                    }
+                    else {
+                        return data;
+                    }
+                },
+                "fnCreatedCell": function (td, data, rowData, iRow, iCol) {
+                    if (data != 0) {
+                        $(td).addClass('drilldown-control');
+                        $(td).data("id", rowData.Id);
+                        $(td).data("type", "warning");
+                    }
                 },
                 "targets": 9
+            },
+            {
+                "render": function (data, type, row) {
+                    if (data != 0) {
+                        return '<a>' + data + '</a>';
+                    }
+                    else {
+                        return data;
+                    }
+                },
+                "fnCreatedCell": function (td, data, rowData, iRow, iCol) {
+                    if (data != 0) {
+                        $(td).addClass('drilldown-control');
+                        $(td).data("id", rowData.Id);
+                        $(td).data("type", "error");
+                    }
+                },
+                "targets": 10
             }
         ]
     });
@@ -108,7 +135,7 @@ $(document).ready(function () {
     $('.dataTables_filter input').attr('placeholder', 'Search')
 
     // Add event listener for opening and closing details
-    $('#executions tbody').on('click', 'a.drilldown-control', function () {
+    $('#executions tbody').on('click', 'td.drilldown-control', function () {
         var id = ($(this).data("id"))
         var type = ($(this).data("type"))
         var table = $('#executions').DataTable();

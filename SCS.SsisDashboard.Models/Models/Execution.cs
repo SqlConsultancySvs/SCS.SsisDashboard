@@ -36,6 +36,7 @@ namespace SCS.SsisDashboard.Models
         public int ElapsedTimeInMinutes { get; set; }
         public int NumberOfWarnings { get; set; }
         public int NumberOfErrors { get; set; }
+        public int NumberOfExecutables { get; set; }   
     }
 }
 

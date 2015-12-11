@@ -24,9 +24,9 @@ namespace SCS.SissDashboard.DAL
         {
             var sql = @"
                 SELECT 0 StatusId, COUNT(*) [RowCount] 
-                FROM [catalog].[executions] 
+                FROM catalog.executions 
                 UNION ALL SELECT [Status] StatusId, COUNT(*) [RowCount] 
-                FROM [catalog].[executions] GROUP BY [status]";
+                FROM catalog.executions GROUP BY [status]";
             var data = context.Database.SqlQuery<KpiDTO>(sql).Select(k => new KPI
             {
                 RowCount = k.RowCount,
