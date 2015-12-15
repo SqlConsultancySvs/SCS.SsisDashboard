@@ -20,8 +20,10 @@ function UpdateTables() {
         },
     });
     try {
-        UpdateKPI();
-        UpdateProjectList();
+        // this may timeout or error if connection string is not correct. So dont make second call if we fail
+        if (UpdateKPI()) {
+            UpdateProjectList();
+        }
     }
     catch (error) {
         App.MsgDialog('type-warning', error);
@@ -79,7 +81,7 @@ $(document).ready(function () {
             { "data": "ElapsedTimeInMinutes" },
             { "data": "NumberOfExecutables" },
             { "data": "NumberOfWarnings" },
-            { "data": "NumberOfErrors" }       
+            { "data": "NumberOfErrors" }
         ],
         "columnDefs": [
             {
@@ -261,7 +263,9 @@ function GetMessages(id, type) {
 function UpdateProjectList(control) {
     var data = App.GetApiData("/Home/GetExecutions", null);
     executionsTable.clear();
-    executionsTable.rows.add(data).draw();
+    if (data) {
+        executionsTable.rows.add(data).draw();
+    }
     return executablesWrapper;
 }
 
@@ -273,7 +277,11 @@ function UpdateKPI() {
         $.each(data, function (i, item) {
             $('#' + item.ExecutionStatus).html(item.RowCount);
         });
+        $("#lastUpdated").html("Updated at:" + App.FormatDate(new Date()));
+        return true;
     }
-    $("#lastUpdated").html("Updated at:" + App.FormatDate(new Date()));
+    else {
+        return false;
+    }
 }
 
