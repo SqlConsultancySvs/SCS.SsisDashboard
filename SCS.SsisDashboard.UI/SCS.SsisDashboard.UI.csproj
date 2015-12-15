@@ -262,6 +262,7 @@
     <Content Include="Content\fonts\font-awesome-4.1.0\css\font-awesome.css" />
     <Content Include="Content\fonts\font-awesome-4.1.0\css\font-awesome.min.css" />
     <Content Include="Content\fonts\font-awesome-4.1.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\Logo.png" />
     <Content Include="Content\images\SCS.jpg" />
     <Content Include="favicon.ico" />
@@ -355,9 +356,13 @@
     <Content Include="Content\fonts\font-awesome-4.1.0\scss\_stacked.scss" />
     <Content Include="Content\fonts\font-awesome-4.1.0\scss\_variables.scss" />
     <Content Include="NLog.config" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\Azure.pubxml" />
     <None Include="Properties\PublishProfiles\Folder.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
