@@ -14,7 +14,7 @@ namespace SCS.SsisDashboard.Models
         {
             get
             {
-                return this.StartTime.HasValue ? this.StartTime.Value.ToShortTimeString() : string.Empty;
+                return this.StartTime.HasValue ? this.StartTime.Value.ToShortDateString() : string.Empty;
             }
         }
         public DateTime? StartTime { get; set; }
@@ -36,6 +36,7 @@ namespace SCS.SsisDashboard.Models
         public int ElapsedTimeInMinutes { get; set; }
         public int NumberOfWarnings { get; set; }
         public int NumberOfErrors { get; set; }
+        public int NumberOfExecutables { get; set; }   
     }
 }
 

@@ -88,7 +88,7 @@ namespace SCS.SsisDashboard.UI.Controllers
             {
                 if (messageType == MessageType.Unknown)
                 {
-                    throw new ArgumentException(String.Format("Unknoe messgae tpye of {0}", type));
+                    throw new ArgumentException(String.Format("Unknown messagae type of:'{0}'.", type));
                 }
                 var data = new MessageRepository().Fetch(executionId, messageType);
                 return Json(data, JsonRequestBehavior.AllowGet);

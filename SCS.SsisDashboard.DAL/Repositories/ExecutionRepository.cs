@@ -33,7 +33,8 @@ namespace SCS.SissDashboard.DAL
 	                ,ISNULL(DATEDIFF(ss, e.start_time, e.end_time) / 60,0) ElapsedTimeInMinutes
 	                ,ISNULL(errors.warnings,0) NumberOfWarnings
 	                ,ISNULL(errors.errors,0) NumberOfErrors
-                FROM [catalog].executions e
+                    ,ISNULL((SELECT COUNT(*) FROM catalog.executables eX WHERE ex.execution_id = e.execution_id),0) NumberOfExecutables
+                FROM catalog.executions e
 	                LEFT JOIN (
 			                SELECT operation_id
 				                ,SUM(CASE WHEN event_name = 'OnError' THEN 1 ELSE 0 END) Errors
