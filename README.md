@@ -3,8 +3,8 @@ Based on the work by Yorek(https://github.com/yorek/ssis-dashboard) this is a da
 
 A demo can be found at: http://ssisDashboard.azurewebsites.net/
 
-![image](https://cloud.githubusercontent.com/assets/15170287/11864477/bf7024d6-a494-11e5-90b7-1857c4dfdf7f.png)
+![dashboard](https://cloud.githubusercontent.com/assets/15170287/11864477/bf7024d6-a494-11e5-90b7-1857c4dfdf7f.png)
 
-
+![dashboard drilldown](https://cloud.githubusercontent.com/assets/15170287/11864588/e4180028-a495-11e5-9d6d-a0a536ef619d.png)
 
 
